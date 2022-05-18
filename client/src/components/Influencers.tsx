@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import './influencer.css' 
 
-
+// Function that converts the numbers back to the initial format before rendering
 function numConvert(num: any) {
     if (num > 1000000) {
         return num / 1000000 + "M"
@@ -13,6 +13,8 @@ function numConvert(num: any) {
     }
   }
 
+
+  // Column definitions for the data grid
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 100 },
   {
@@ -191,17 +193,18 @@ const countryColumn: GridColDef[] = [
 
 const Influencers = () => {
 
-  const [myData, setMyData] = useState([])
-  const [categories, setCategories] = useState(['All'])
-  const [topInfluencers, setTopInfluencers] = useState([])
-  const [countries, setCountries] = useState([ 'All'])
-  const [topInfluencersCountry, settopInfluencersCountry] = useState([])
-  const [topInfluencersByCategory, setTopInfluencersByCategory] = useState([])
-  const [topInfluencersByCountry, setTopInfluencersByCountry] = useState([])
+  // States for the data
+  const [myData, setMyData] = useState([])  // The main data array
+  const [categories, setCategories] = useState(['All']) // The categories array
+  const [topInfluencers, setTopInfluencers] = useState([]) // The top influencers array
+  const [countries, setCountries] = useState([ 'All']) // The countries array
+  const [topInfluencersCountry, settopInfluencersCountry] = useState([]) // The top influencers array based on country
+  const [topInfluencersByCategory, setTopInfluencersByCategory] = useState([]) // The top influencers array based on category
+  const [topInfluencersByCountry, setTopInfluencersByCountry] = useState([]) // The top influencers array based on country
 
   
 
-  
+  // This function changes the column names of the columns that have sppace in their names
   function changeColumnName(myData: any) {
   for (let i = 0; i < myData.length; i++) {
     let temp = myData[i]
@@ -232,7 +235,7 @@ const Influencers = () => {
   return myData
 }
 
-
+// This function adds id to the data, converts M to K and converts to numbers to enable computation and rturns the data 
   function newMyData(myData : any) {
     for (var i = 0; i < myData.length; i++) {
         var followers = myData[i].Followers;
@@ -266,6 +269,7 @@ const Influencers = () => {
     return myData;
   }
   
+  // function gets all the categories from the data and returns them
   function getCategories(myData : any) {
     var categories = [];
     for (var i = 0; i < myData.length; i++) {
@@ -280,7 +284,8 @@ const Influencers = () => {
     }
     return categories;
   }
-  
+
+  // This function gets the top influencers based on the category 
   function getTopInfluencers(myData : any, categories : any) {
     var topInfluencers : any = [];
 
@@ -307,6 +312,7 @@ const Influencers = () => {
     return topInfluencers;
 }
 
+    // This function gets the list of countries from the data and returns them
 function getCountries(myData: any) {
     var countries = [];
 
@@ -321,6 +327,7 @@ function getCountries(myData: any) {
     return countries;
   }
   
+  // This function gets the top influencers based on the country
   function getTopInfluencersCountry(countries: any, myData: any) {
     var topInfluencersCountry : any  = [];
 
@@ -347,6 +354,7 @@ function getCountries(myData: any) {
     return topInfluencersCountry;
   }
   
+  // This function gets the top influencers based on the categories
   function getTopInfluencersPerCategory(topInfluencersCategory: any) {
     var topInfluencersCategoryArray : any = []
     for (var key in topInfluencersCategory) {
@@ -365,6 +373,7 @@ function getCountries(myData: any) {
     return topInfluencersCategoryArray
 }
 
+  // This function gets the top influencers based on the countries
 function getTopInfluencersByCountry(topInfluencersCountry: any) {
     var topInfluencersCountryArray: any = []
     for (var key in topInfluencersCountry) {
@@ -385,6 +394,7 @@ function getTopInfluencersByCountry(topInfluencersCountry: any) {
     return topInfluencersCountryArray
   }
 
+  // UseEffect to get the data from the API
   useEffect(() => {
     fetch('http://localhost:3001/')
       .then((data) => data.json())
@@ -400,6 +410,7 @@ function getTopInfluencersByCountry(topInfluencersCountry: any) {
 
   })
     
+  // rendering the data
   return (
     <>
       <div>
