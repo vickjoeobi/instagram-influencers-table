@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import axios from 'axios'
 import './influencer.css' 
+
+function numConvert(num: any) {
+    if (num > 1000000) {
+        return num / 1000000 + "M"
+    } else if (num > 1000) {
+        return num / 1000 + "K"
+    } else {
+        return num
+    }
+  }
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 100 },
@@ -14,61 +23,107 @@ const columns: GridColDef[] = [
   {
     field: 'instagram_name',
     headerName: 'Instagram Name',
+    width: 200,
+    headerAlign: 'center',
     },
     {
       field: 'category_1',
       headerName: 'Category 1',
+      width: 200,
+    headerAlign: 'center',
     },
     {
       field: 'category_2',
       headerName: 'Category 2',
+      width: 100,
+    headerAlign: 'center',
     },
     {
       field: 'Followers',
       headerName: 'Followers Count',
+      width: 200,
+      headerAlign: 'center',
+      valueGetter: (params) => {
+        return params.row.Followers ? numConvert(params.row.Followers) : 0
+      }
     },
     {
       field: 'Audience_country',
       headerName: 'Country',
+      width: 100,
+    headerAlign: 'center',
     },
     {
       field: 'Authentic_engagement',
       headerName: 'Authentic Engagement',
+      width: 200,
+      headerAlign: 'center',
+    valueGetter: (params) => {
+        return params.row.Authentic_engagement ? numConvert(params.row.Authentic_engagement) : 0
+      }
     },
     {
       field: 'Engagement_avg',
       headerName: 'Engagement Rate',
+      width: 200,
+      headerAlign: 'center',
+      valueGetter: (params) => {
+        return params.row.Engagement_avg ? numConvert(params.row.Engagement_avg) : 0
+      }
     },
 ];
 
 const categoryColumn: GridColDef[] = [
   {
       field: 'category',
-      headerName: 'Categories',
+    headerName: 'Categories',
+      width: 200,
+    headerAlign: 'center',
   },
   {
     field: 'Influencer_insta_name',
     headerName: 'Instagram Username',
+    width: 200,
+    headerAlign: 'center',
   },
   {
     field: 'instagram_name',
     headerName: 'Instagram Name',
+    width: 200,
+    headerAlign: 'center',
     },
     {
       field: 'Followers',
       headerName: 'Followers Count',
+      width: 200,
+      headerAlign: 'center',
+      valueGetter: (params) => {
+        return params.row.Followers ? numConvert(params.row.Followers) : 0
+      }
     },
     {
       field: 'Audience_country',
       headerName: 'Country',
+      width: 200,
+      headerAlign: 'center',
     },
     {
       field: 'Authentic_engagement',
       headerName: 'Authentic Engagement',
+      width: 200,
+      headerAlign: 'center',
+      valueGetter: (params) => {
+        return params.row.Authentic_engagement ? numConvert(params.row.Authentic_engagement) : 0
+      }
     },
     {
       field: 'Engagement_avg',
       headerName: 'Engagement Rate',
+      width: 200,
+      headerAlign: 'center',
+      valueGetter: (params) => {
+        return params.row.Engagement_avg ? numConvert(params.row.Engagement_avg) : 0
+      }
     },
 ];
 
@@ -76,43 +131,64 @@ const countryColumn: GridColDef[] = [
   
     {
       field: 'Audience_country',
-      headerName: 'Country',
+    headerName: 'Country',
+      width: 200,
+    headerAlign: 'center',
   },
   {
     field: 'Influencer_insta_name',
     headerName: 'Instagram Username',
+    width: 150,
+    headerAlign: 'center',
   },
   {
     field: 'instagram_name',
     headerName: 'Instagram Name',
+    width: 150,
+    headerAlign: 'center',
     },
     {
       field: 'category_1',
       headerName: 'Category 1',
+      width: 150,
+    headerAlign: 'center',
     },
     {
       field: 'category_2',
       headerName: 'Category 2',
+      width: 150,
+    headerAlign: 'center',
     },
     {
       field: 'Followers',
       headerName: 'Followers Count',
+      width: 200,
+      headerAlign: 'center',
+      valueGetter: (params) => {
+        return params.row.Followers ? numConvert(params.row.Followers) : 0
+      }
     },
     {
       field: 'Authentic_engagement',
       headerName: 'Authentic Engagement',
+      width: 200,
+      headerAlign: 'center',
+      valueGetter: (params) => {
+        return params.row.Authentic_engagement ? numConvert(params.row.Authentic_engagement) : 0
+      }
     },
     {
       field: 'Engagement_avg',
       headerName: 'Engagement Rate',
+      width: 200,
+      headerAlign: 'center',
+      valueGetter: (params) => {
+        return params.row.Engagement_avg ? numConvert(params.row.Engagement_avg) : 0
+      }
     },
 ];
 const Influencers = () => {
-
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
   const [myData, setMyData] = useState([])
-  const [tableData, setTableData] = useState([])
   const [categories, setCategories] = useState(['All'])
   const [topInfluencers, setTopInfluencers] = useState([])
   const [countries, setCountries] = useState([ 'All'])
@@ -338,7 +414,19 @@ function convertToString(anyData: any) {
         }
     }
     return anyData
-}
+  }
+  
+  //function that checks if a number is greater than 1000000 and converts it to a string with M at the end if it is greater than 1000000 and K if it is greater than 1000 and if it is less than 1000 it will just return the number
+
+  function numConvert(num: any) {
+    if (num > 1000000) {
+        return num / 1000000 + "M"
+    } else if (num > 1000) {
+        return num / 1000 + "K"
+    } else {
+        return num
+    }
+  }
 
   useEffect(() => {
     fetch('http://localhost:3001/')
@@ -351,19 +439,19 @@ function convertToString(anyData: any) {
         settopInfluencersCountry(getTopInfluencersCountry(countries, myData))
         setTopInfluencersByCategory(getTopInfluencersPerCategory(topInfluencers))
         setTopInfluencersByCountry(getTopInfluencersByCountry(topInfluencersCountry))
-        setTableData(convertToString(myData))
       })
+
   })
     
   return (
     <>
       <div>
-        <h1>Coding Challenge</h1>
         <div style={{
           height: 700, width: '100%',
         }}>
+          <h1>All influencer's Data</h1>
           <DataGrid
-            rows={tableData}
+            rows={myData}
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[5]}
@@ -372,6 +460,7 @@ function convertToString(anyData: any) {
         <div style={{
           height: 700, width: '100%',
         }}>
+          <h1>Top 1 Influencer per category</h1>
           <DataGrid
             rows={topInfluencersByCategory}
             columns= {categoryColumn}
@@ -382,6 +471,7 @@ function convertToString(anyData: any) {
         <div style={{
           height: 700, width: '100%',
         }}>
+          <h1>Top 1 Influencer per country</h1>
           <DataGrid
             rows={topInfluencersByCountry}
             columns={countryColumn}
