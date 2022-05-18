@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import './influencer.css' 
 
+
 function numConvert(num: any) {
     if (num > 1000000) {
         return num / 1000000 + "M"
@@ -187,7 +188,9 @@ const countryColumn: GridColDef[] = [
       }
     },
 ];
+
 const Influencers = () => {
+
   const [myData, setMyData] = useState([])
   const [categories, setCategories] = useState(['All'])
   const [topInfluencers, setTopInfluencers] = useState([])
@@ -229,7 +232,6 @@ const Influencers = () => {
   return myData
 }
 
-  // get a new copy of myData with numbers formated correctly
 
   function newMyData(myData : any) {
     for (var i = 0; i < myData.length; i++) {
@@ -381,51 +383,6 @@ function getTopInfluencersByCountry(topInfluencersCountry: any) {
         topInfluencersCountryArray.push(tempObj)
     }
     return topInfluencersCountryArray
-  }
-  
-function convertToString(anyData: any) {
-    for (var i = 0; i < anyData.length; i++) {
-        var followers = anyData[i].Followers
-        var authenticEngagement = anyData[i].Authentic_engagement
-        var engagementAvg = anyData[i].Engagement_avg
-
-        if (followers > 1000000) {
-            anyData[i].Followers = followers / 1000000 + "M"
-        } else if (followers > 1000) {
-            anyData[i].Followers = followers / 1000 + "K"
-        } else {
-            anyData[i].Followers = followers
-        }
-
-        if (authenticEngagement > 1000000) {
-            anyData[i].Authentic_engagement = authenticEngagement / 1000000 + "M"
-        } else if (authenticEngagement > 1000) {
-            anyData[i].Authentic_engagement = authenticEngagement / 1000 + "K"
-        } else {
-            anyData[i].Authentic_engagement = authenticEngagement
-        }
-
-        if (engagementAvg > 1000000) {
-            anyData[i].Engagement_avg = engagementAvg / 1000000 + "M"
-        } else if (engagementAvg > 1000) {
-            anyData[i].Engagement_avg = engagementAvg / 1000 + "K"
-        } else {
-            anyData[i].Engagement_avg = engagementAvg
-        }
-    }
-    return anyData
-  }
-  
-  //function that checks if a number is greater than 1000000 and converts it to a string with M at the end if it is greater than 1000000 and K if it is greater than 1000 and if it is less than 1000 it will just return the number
-
-  function numConvert(num: any) {
-    if (num > 1000000) {
-        return num / 1000000 + "M"
-    } else if (num > 1000) {
-        return num / 1000 + "K"
-    } else {
-        return num
-    }
   }
 
   useEffect(() => {
