@@ -3,7 +3,7 @@
 This application contains three tables:
 
  1. General Instagram Influencers
- 2. Top #1 influencer per category based on followers 
+ 2. Top #1 influencer per category based on followers
  3. Top #1 influencer per country based on followers
 
 
@@ -24,4 +24,3 @@ This application contains three tables:
  - Need more detail? Still raise an issue
 
 ![Bye]([https://media.giphy.com/media/XDSBGwnjvTpoZGJhxY/giphy.gif](https://media.giphy.com/media/twsazOJH0bs5sVZF6I/giphy.gif))
-
